@@ -1,6 +1,13 @@
 <template>
   <div class="content">
-    <h1>买车界面</h1>
+    <el-form :inline="true"  class="demo-form-inline">
+      <el-form-item>
+        <el-input v-model="input" placeholder="搜索" @keyup.enter.native="research"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="research">查询</el-button>
+      </el-form-item>
+    </el-form>
     <ul class="cont-ul">
       <!-- list组件展示区，并用v-for来将数据遍历，:xx="xxx" 是用来给子组件传递数据的 -->
       <pros v-bind:key="result.title" v-for="result in results" :price="result.abstract" :title="result.title" :img="result.img"></pros>
@@ -21,6 +28,7 @@ export default {
   name: 'show-car',
   data () {
     return {
+      input: '大众',
       results: [
         {title: '第一条内容', abstract: '12000', img: 'http://m.360buyimg.com/babel/s211x211_jfs/t3688/270/776223567/128582/fa074fb3/58170f6dN6b9a12bf.jpg!q50.jpg.webp'},
         {title: '接着是第二条', abstract: '2333', img: 'http://m.360buyimg.com/babel/s211x211_jfs/t613/100/1264998035/221234/1a29d51f/54c34525Nb4f6581c.jpg!q50.jpg.webp'},
@@ -35,6 +43,11 @@ export default {
         {title: '然后是第11条', abstract: 'qqqq'}
       ]
     }
+  },
+  methods: {
+    research () {
+      console.log('submit!')
+    }
   }
 }
 </script>
@@ -45,7 +58,7 @@ export default {
     margin: 0 auto;
   }
   .content {
-    margin-bottom: 1.8rem;
+    margin-bottom: 1rem;
   }
   .cont-ul {
     padding: 0;

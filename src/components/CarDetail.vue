@@ -1,15 +1,19 @@
 //商品详情页内容
-<template lang="html">
-  <div class="detail">
+<template>
+  <div>
     <detail-header></detail-header>
-    <p class="site-title">汽车</p>
-    <p class="site-cont">宝马车。</p>
-
+      <el-carousel height="150px">
+        <el-carousel-item v-for="item in 4" :key="item">
+          <h3>{{ item }}</h3>
+        </el-carousel-item>
+      </el-carousel>
+      <p class="site-title">汽车</p>
+      <p class="site-cont">宝马车。</p>
   </div>
 </template>
 
 <script>
-import DetailHeader from '@/components/DetailHeader'
+import DetailHeader from '@/components/DetailHeader.vue'
 
 export default {
   data () {
@@ -24,26 +28,20 @@ export default {
 </script>
 
 <style lang="css">
-  .detail {
-    padding: 0.25rem;
-    font-size: 12px;
-  }
-  .detail > img {
-    display: block;
-    width: 80%;
-    margin:  0 auto 0.5rem;
-  }
-  .detail > p {
-    font-size: 1.1rem;
-    line-height: 1.5rem;
-    text-align: left;
-    padding-bottom: 0.5rem;
-  }
-  .detail > p.site-title {
-    color: #ff8000;
-  }
-  .detail > p.site-cont {
-    color: #666;
+
+  .el-carousel__item h3 {
+    color: #475669;
     font-size: 0.9rem;
+    opacity: 0.75;
+    line-height: 1.5rem;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
   }
 </style>

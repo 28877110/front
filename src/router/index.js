@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Mine from '@/components/Mine.vue'
-import showCarList from '@/components/CarList.vue'
-import login from '@/components/login.vue'
-import notfound from '@/components/NotFound.vue'
-import CarDetail from '@/components/CarDetail.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -13,30 +8,30 @@ export default new Router({
     {
       path: '/',
       name: 'HelloWorld',
-      component: HelloWorld
+      component: resolve => require(['@/components/HelloWorld.vue'], resolve)
     },
     {
       path: '/mine',
       name: 'Mine',
-      component: Mine
+      component: resolve => require(['@/components/Mine.vue'], resolve)
     },
     {
       path: '/login',
       name: 'Login',
-      component: login
+      component: resolve => require(['@/components/login.vue'], resolve)
     },
     {
       path: '/carlist',
       name: 'show-car',
-      component: showCarList
+      component: resolve => require(['@/components/CarList.vue'], resolve)
     },
     {
       path: '/carDetail',
-      component: CarDetail
+      component: resolve => require(['@/components/CarDetail.vue'], resolve)
     },
     {
       path: '*',
-      component: notfound
+      component: resolve => require(['@/components/page/NotFound.vue'], resolve)
     }
   ]
 })
