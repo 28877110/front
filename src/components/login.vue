@@ -1,8 +1,8 @@
 <template>
   <p class="login">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName" ref="activeName" @tab-click="handleClick">
       <el-tab-pane label="登录" name="first">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" >
           <el-form-item label="帐号" prop="name">
             <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
@@ -28,15 +28,13 @@
 import register from '@/components/register'
 import ElTabPane from 'element-ui/packages/tabs/src/tab-pane'
 import findPassword from '@/components/findPassword'
+// import service from '@/utils/'
 export default {
   data () {
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass')
-        }
         callback()
       }
     }
@@ -44,8 +42,7 @@ export default {
       activeName: 'first',
       ruleForm: {
         name: 'asd',
-        pass: 'asd',
-        checkPass: 'asd'
+        pass: 'asd'
       },
       rules: {
         name: [
@@ -68,6 +65,9 @@ export default {
     },
     // 提交表单
     submitForm (formName) {
+      this.$axios.post('/api/index').then(res => {
+        console.log(res.data)
+      })
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$message({

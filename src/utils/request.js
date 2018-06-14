@@ -1,15 +1,17 @@
 import axios from 'axios'
 import store from '../store'
-import {getToken} from './auth'
 
 const service = axios.create({
-  baseURL: '127.0.0.1：4000',
-  timeout: 5000
+  baseURL: '/api',
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
 service.interceptors.request.use(config => {
   if (store.getters.token) {
-    config.headers['token'] = getToken()
+    config.headers['token'] = store.getters
   }
   return config
 }, error => {

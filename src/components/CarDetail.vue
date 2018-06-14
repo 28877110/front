@@ -2,13 +2,14 @@
 <template>
   <div>
     <detail-header></detail-header>
-      <el-carousel height="150px">
+      <el-carousel height="20rem">
         <el-carousel-item v-for="item in 4" :key="item">
           <h3>{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
       <p class="site-title">汽车</p>
-      <p class="site-cont">宝马车。</p>
+      <p class="site-cont">宝马车。{{token2}}</p>
+
   </div>
 </template>
 
@@ -19,6 +20,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  computed: {
+    token2 () {
+      return this.$store.state.token
     }
   },
   components: {

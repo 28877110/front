@@ -7,8 +7,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: resolve => require(['@/components/HelloWorld.vue'], resolve)
+      name: 'main',
+      component: resolve => require(['@/components/login.vue'], resolve)
     },
     {
       path: '/mine',

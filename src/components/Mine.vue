@@ -1,17 +1,24 @@
 <template>
-  <div>mine page</div>
+  <div>
+    <el-button type="primary" @click = 'getIndex'>主要按钮</el-button>
+  </div>
 </template>
 <script>
-import Qs from 'axios'
+import service from '@/utils/request.js'
 export default {
   created () {
-    Qs.get('/api/api/index')
+    service.get('api/index')
       .then((response) => {
         console.log(response)
       })
-    // this.$api.get('/api/index', null, r => {
-    //   console.log(r)
-    // })
+  },
+  methods: {
+    getIndex () {
+      service.get('/api/index')
+        .then((response) => {
+          console.log(response)
+        })
+    }
   }
 }
 </script>
