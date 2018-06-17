@@ -1,6 +1,6 @@
 <template>
   <div id="bottomNav">
-    <router-link to="/" class="tab">首页</router-link>
+    <router-link to="/carlist" class="tab">首页</router-link>
     <router-link to="/mine" class="tab">我的</router-link>
   </div>
 </template>

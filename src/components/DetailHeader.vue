@@ -1,7 +1,7 @@
-//商品详情页头
+//详情页头
 <template>
   <div class="detailHeader">
-    <mt-header title="详情">
+    <mt-header>
       <router-link to="/carlist" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>

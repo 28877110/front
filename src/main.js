@@ -9,7 +9,10 @@ import store from './store/index.js'
 import axios from 'axios'
 import mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
+import Vant from 'vant'
+import 'vant/lib/vant-css/index.css'
 
+Vue.use(Vant)
 Vue.use(mint)
 Vue.prototype.axios = axios
 Vue.use(ElementUI)
