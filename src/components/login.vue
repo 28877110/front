@@ -28,6 +28,7 @@
 import register from '@/components/register'
 import ElTabPane from 'element-ui/packages/tabs/src/tab-pane'
 import findPassword from '@/components/findPassword'
+import service from '@/utils/request.js'
 // import service from '@/utils/'
 export default {
   data () {
@@ -47,7 +48,7 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入您的帐号', trigger: 'blur' },
-          { min: 2, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur' }
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
         pass: [
           { required: true, validator: validatePass, trigger: 'blur' }
@@ -65,21 +66,30 @@ export default {
     },
     // 提交表单
     submitForm (formName) {
-      this.$axios.post('/api/index').then(res => {
-        console.log(res.data)
+      service.post('api/login', {
+        'username': this.ruleForm.name,
+        'password': this.ruleForm.pass
       })
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$message({
-            type: 'success',
-            message: '登录成功'
-          })
-          this.$router.push('carlist')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+        .then((response) => {
+          console.log(response.code)
+          if (response.code !== 200) {
+            this.$message({
+              message: response.reason
+            })
+          } else {
+            this.$message({
+              type: 'success',
+              message: '登录成功'
+            })
+            let logintoken = response.token
+            this.$store.commit('setToken', logintoken)
+            if (response.permission === 2) {
+              this.$router.push('carlist')
+            } else {
+              this.$router.push('addCar')
+            }
+          }
+        })
     }
   },
   components: {

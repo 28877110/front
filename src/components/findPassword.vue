@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import service from '@/utils/request.js'
 export default {
   name: 'findPassword',
   data () {
@@ -52,7 +53,7 @@ export default {
       rules: {
         name: [
           {required: true, message: '请输入您的帐号', trigger: 'blur'},
-          {min: 2, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur'}
+          {min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur'}
         ],
         pass: [
           { required: true, validator: validatePass, trigger: 'blur' }
@@ -69,21 +70,35 @@ export default {
   },
   methods: {
     queryPassword (ruleForm) {
-      this.$refs[ruleForm].validate((valid) => {
-        if (valid) {
-          this.$message({
-            type: 'success',
-            message: '验证码已经发送邮件到你邮箱'
-          })
-          // this.activeName: 'first',
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+      service.post('api/password', {
+        'name': this.ruleForm.name,
+        'newpassword': this.ruleForm.pass,
+        'code': this.ruleForm.code
       })
+        .then((response) => {
+          console.log(response.code)
+          if (response.code !== 200) {
+            this.$message({
+              message: response.reason
+            })
+          } else {
+            this.$message({
+              type: 'success',
+              message: '修改成功'
+            })
+          }
+        })
     },
     sendMail (ruleForm) {
-      this.$refs[ruleForm].resetFields()
+      service.post('api/mail', {
+        'name': this.ruleForm.name
+      })
+        .then((response) => {
+          console.log(response.code)
+          this.$message({
+            message: '验证码已经发送邮件到你邮箱'
+          })
+        })
     }
   }
 }

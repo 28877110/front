@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import service from '@/utils/request.js'
 export default {
   data () {
     var validatePass = (rule, value, callback) => {
@@ -62,7 +63,7 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入您的帐号', trigger: 'blur' },
-          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
         pass: [
           { required: true, validator: validatePass, trigger: 'blur' }
@@ -78,19 +79,19 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$message({
-            type: 'success',
-            message: '注册成功，已经发送邮件到你邮箱'
-          })
-          // this.activeName: 'first',
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+      service.post('api/users', {
+        'username': this.ruleForm.name,
+        'password': this.ruleForm.pass,
+        'mail': this.ruleForm.mail
       })
+        .then((response) => {
+          console.log(response.code)
+          this.$message({
+            message: response.reason
+          })
+        })
     },
+    // 刷新
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }

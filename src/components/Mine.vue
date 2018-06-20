@@ -3,35 +3,62 @@
     <DetailHeader></DetailHeader>
     <el-collapse v-model="activeNames" accordion>
       <el-collapse-item title="我的记录" name="1">
-        <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-        <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+        <div>{{carname}}</div>
+        <div>{{carprice}}万</div>
+        <el-button type="primary" @click="buy">购买</el-button>
       </el-collapse-item>
     </el-collapse>
+    <el-button type="danger" @click="removeStore" style="width:100%">退出登陆</el-button>
     <BottomNav></BottomNav>
   </div>
 </template>
 <script>
+import { ImagePreview } from 'vant'
 import DetailHeader from '@/components/DetailHeader.vue'
 import BottomNav from '@/components/BottomNav.vue'
 import service from '@/utils/request.js'
 export default {
   data () {
     return {
-      activeNames: '1'
+      activeNames: '1',
+      carlist: [],
+      carprice: '',
+      carname: ''
     }
   },
   created () {
-    service.get('api/index')
+    service.post('api/getCar', {
+      index: localStorage.getItem('carindex')
+    }).then((response) => {
+      console.log(response)
+      this.carname = response.results.name
+      this.carprice = response.results.price
+    })
+    service.get('api/hello')
       .then((response) => {
         console.log(response)
       })
   },
   methods: {
     getIndex () {
-      service.get('/api/index')
+      service.get('/api/hello')
         .then((response) => {
           console.log(response)
         })
+    },
+    removeStore () {
+      this.$store.commit('delToken')
+      console.log(this.$store.getters)
+      this.$router.push('/')
+    },
+    buy () {
+      const instance = ImagePreview([
+        'http://localhost/upload/pay.jpeg'
+      ])
+
+      setTimeout(() => {
+        instance.close()
+      }, 1000)
     }
   },
   components: {

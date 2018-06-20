@@ -1,12 +1,12 @@
 <template lang="html">
   <li class="goods-list">
-    <router-link to="/CarDetail"  class="goods-list-link">
+    <router-link :to="{path: 'CarDetail', query: {index: index}}"  class="goods-list-link">
       <div class="goods-list-pic">
         <img :src="img" alt="">
-      </div>
+      </div>{{index}}
       <div class="goods-list-desc">
         <p class="goods-list-name">{{ title }}</p>
-        <p class="goods-list-price">{{ price }}</p>  <!-- 这里用到了过滤器货币形式和保留两位小数 -->
+        <p class="goods-list-price">{{ price }}万</p>  <!-- 这里用到了过滤器货币形式和保留两位小数 -->
       </div>
     </router-link>
   </li>
@@ -15,7 +15,7 @@
 <script>
 export default {
   name: 'pros',
-  props: ['price', 'title', 'img'] /*  props是子组件获取父组件数据用的 */
+  props: ['price', 'title', 'img', 'index'] /*  props是子组件获取父组件数据用的 */
 }
 </script>
 
